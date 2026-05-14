@@ -477,6 +477,7 @@ fn generate_book_page(book: &Book, all_books: &[Book]) -> String {
     html.push_str("<!DOCTYPE html>\n<html lang=\"zh-CN\">\n<head>\n");
     html.push_str("<meta charset=\"UTF-8\">\n");
     html.push_str("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n");
+    html.push_str("<link rel=\"icon\" href=\"favicon.png\">\n");
     html.push_str(&format!(
         "<title>{} —— 计算机嘉豪福音</title>\n",
         html_escape(&book.title_cn)
@@ -558,6 +559,7 @@ fn generate_index(all_books: &[Book]) -> String {
     html.push_str("<!DOCTYPE html>\n<html lang=\"zh-CN\">\n<head>\n");
     html.push_str("<meta charset=\"UTF-8\">\n");
     html.push_str("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n");
+    html.push_str("<link rel=\"icon\" href=\"favicon.png\">\n");
     html.push_str("<title>计算机嘉豪福音 — 正典全集</title>\n");
     html.push_str("<style>");
     html.push_str(CSS);
@@ -637,6 +639,19 @@ fn main() {
     f.write_all(index_html.as_bytes())
         .expect("无法写入 index.html");
     println!("📄 生成: {}", index_path.display());
+
+    let favicon_src = Path::new("../assets/17608959f5505ba06338b80c0d0bd6c9.png");
+    let favicon_dst = out_dir.join("favicon.png");
+    if favicon_src.exists() {
+        fs::copy(&favicon_src, &favicon_dst).expect("无法复制 favicon");
+        println!(
+            "📄 复制: {} → {}",
+            favicon_src.display(),
+            favicon_dst.display()
+        );
+    } else {
+        eprintln!("⚠️  找不到 favicon: {}", favicon_src.display());
+    }
 
     println!(
         "\n✨ 全部完成！{} 卷经文已由 Rust 重写世间一切。",
