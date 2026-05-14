@@ -1,0 +1,9 @@
+[package]
+name = "gospel-render"
+version = "0.1.0"
+edition = "2021"
+description = "Rust 重写世间一切 —— 将计算机嘉豪福音 books/ 下的经文渲染为圣经风格网页"
+
+[dependencies]
+pulldown-cmark = "0.12"
+regex-lite = "0.1"
